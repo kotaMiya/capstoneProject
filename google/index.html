@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CloudVision</title>
+	<link rel="stylesheet" type="text/css" href="css/mycss.css">
+</head>
+<body>
+<div id = "header">
+	<form action="index.html">
+   		<button class="button form1" >CloudVision</button>
+   		<button class="button form1" >Microsoft</button>
+   		<button class="button form1" >AmazonRekognition</button>
+   		<button class="button form1" >Face++</button>
+	</form>
+</div>
+
+
+<div id = "wrapper">
+<div style="overflow:hidden;">
+	<div class="l-box">
+		<div class = "image">
+			<div id="myCanvas" >
+				
+			</div>
+		</div>
+
+		<div = class = "upload">
+		<label for="filename" class="custom-file-upload"> Upload</label>
+		<input type="file" id="filename" name="filename"  multiple>
+		</div>
+
+		<div class = "handin">
+			<button class="button handinButton" id="btn" >Detect</button>
+		
+		</div>
+
+		
+	</div>
+	
+
+
+
+	<div class="r-box">
+		<div id="response" class = "log">
+		</div>
+		<div class = "download">
+			<button id="confirmBtn" class="button downloadButton" >Download</button>
+			  <a class="export" style="display:none" href="download"></a>
+		</div>
+	</div>
+
+	</div>
+	<div class = "filename" id = "name">
+	</div>
+</div>
+
+
+
+
+<div id="footer"> 2018@CloudVision</div>
+<script src="js/jquery-2.2.2.min.js"></script>
+<script src="js/faceDetection.js"></script>
+<script type="text/javascript" src="fileSaver.js" charset="utf-8"></script>
+</body>
+
+
+<script type="text/javascript">
+	var obj = [];
+document.querySelector(".export").addEventListener('click',
+  function(){
+    this.download = "log.json";
+    this.href = "data:application/json," + JSON.stringify(obj,null,2);
+  }
+)
+document.getElementById("confirmBtn").addEventListener('click',function(){
+  document.querySelector(".export").click();
+})
+
+
+</script>
+</html>
+

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Capstone</title>
+        <link rel='stylesheet' href='/css/style.css' />
+        <link rel='stylesheet' href='/css/hangsuper.css' />
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+        <script src="https://github.com/eligrey/FileSaver.js"></script>
+        <script src='/js/hangsuper.js'></script>
+        <script src='/js/amazon.js'></script>
+        
+       
+    </head>
+    <body>
+            <content>
+        <header class="headerContainer">
+            <div class="homeText">
+                    <h1 onclick="changeText(this)"><%= title %></h1>
+            </div>
+            <div class="toggleWrapper">
+                <ul>
+                    <li class="detectionSide">
+                        <a href="/api/rekognition/detection" class="toggle">Detection</a>
+                    </li>
+                    <li>
+                        <a href="/api/rekognition/recognition" class="toggle reco">Recognition</a>
+                    </li>
+                </ul>
+            </div>
+            <nav>
+                <ul style="list-style-type:none">
+                    <li>
+                        <a href='/api/vision'>Google</a>
+                    </li>
+                    <li>
+                        <a href='/api/face'>Microsoft</a>
+                    </li>
+                    <li>
+                        <a href='/api/rekognition/detection'>Amazon</a>
+                    </li>
+                    <li>
+                        <a href='/api/faceplusplus'>Face++</a>
+                    </li>
+                    <li>
+                        <a href='/api/bioid'>BioID</a>
+                    </li>
+                </ul>   
+                    
+            </nav>
+        </header>
+       
+        <div class="amazonMainContainer">
+            <div id="firstScreen">
+                <div id="pictureScreen" class="horizontalScrollWrapper">
+                        <div id="test" class="scrollInner">
+                            <%- sourceImageList %>
+                        </div>
+                    </div>
+        
+                    <div id="targetScreen" class="horizontalScrollWrapper">
+                        <div id="target" class="scrollInner">
+                            <%- targetImageList %>
+                        </div>
+                    </div>
+            </div>
+            
+            <div class="leftSideButton">
+                <form method="POST" action="/api/rekognition"  onsubmit = "hs.loading()" enctype="multipart/form-data">
+                    <ul class="button-list">
+                        <li>
+                            <label class="uploadButton">
+                                Upload Source Image
+                                <input type="file" id="files" name="images" value="hello" multiple onchange="readSourceImages(this)">
+                            </label>
+                        </li>   
+                        <li>
+                            <label class="uploadButton">
+                                Upload Target Image
+                                <input type="file" id="foo" name="images" value="hello" multiple onchange="readTargetImages(this)">
+                            </label>
+                        </li>  
+                        <li>
+                            <input type="submit" value="Run" class="detectButton">
+                        </li>   
+                    </ul>
+                </form>
+                
+            </div>
+
+            <div class="resultScreen" class="verticalScrollWrapper">
+                <div class="verticalScrollInner">
+                    <div id="resultText">
+                        <%- content %>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rightSideButton">
+    
+                <input value="Create a text file" type="button" id="export" class="downloadButton" />
+                <a id="download" target="_blank">Download</a>
+
+                
+            </div>
+        </div>
+
+
+    
+
+        <footer>
+
+        </footer>
+    </content>
+    </body>
+    <script>
+        hs.pageLoader('content');
+    </script>
+</html>
