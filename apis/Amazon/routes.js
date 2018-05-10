@@ -30,8 +30,8 @@ var client = s3.createClient({
     multipartUploadThreshold: 20971520,  
     multipartUploadSize: 15728640, 
     s3Options: {
-      accessKeyId: "AWS_ACCESS_KEY_ID", 
-      secretAccessKey: "AWS_SECRET_ACCESS_KEY",  
+      accessKeyId: "ACCESS_KEY_ID", 
+      secretAccessKey: "SECRET_ACCESS_KEY",  
     },
 });
 
@@ -57,20 +57,11 @@ router.get('/rekognition/recognition', function(req, res) {
 })
 
 
-
-
-router.post('/rekognition', uploader.array('images', 10),  function(req, res, next) {
-    const RapidAPI = require('rapidapi-connect');
-    const rapid = new RapidAPI("default-application_59b2bf13e4b07e6c5c5a69dc", "e796b8fe-7d87-4a8d-abc6-860bd36c682a");
-
-    // console.log(req.files);
+router.post('/rekognition/detection', uploader.array('images', 10), function(req, res) {
     const files = req.files;
-    const meta = req.body;
-
-    var imageName = [];
+    let imageName = [];
 
 
-   
     for (var i = 0; i < files.length; i++) {
         imageName[i] = req.files[i].originalname;
         console.log(imageName[i]);
@@ -103,16 +94,13 @@ router.post('/rekognition', uploader.array('images', 10),  function(req, res, ne
     var targetImageTagList = '';
     var result = '';
 
-    
 
     for (var i = 0; i < files.length; i++) {
         sourceImageTagList += '<img class="box" src="https://s3.amazonaws.com/hello-garden/' + imageName[i] + '" height=230 width=200>';
     }
 
     setTimeout(() => {
-        console.log('#2');
-        console.log(imageName[0]);
-
+    
         for (var i = 0; i < imageName.length; i++) {
             var num = 0;
 
@@ -129,30 +117,25 @@ router.post('/rekognition', uploader.array('images', 10),  function(req, res, ne
                     "ALL",
                 ]
             };
-            var detecting = new Promise(function(resolve, reject) {
-                rekognition.detectFaces(params, function(err, data) {
-                    if (err) {
-                        console.log(err, err.stack); 
-                    } else {
-                        console.log('ok passed', imageName[num]);
-                        console.log(data.FaceDetails[0].Emotions);
-                        result += '<p>' + imageName[num] + ', ' +
-                                data.FaceDetails[0].Gender.Value + ', ' +
-                                data.FaceDetails[0].Emotions[0].Type + ': ' +
-                                data.FaceDetails[0].Emotions[0].Confidence.toFixed(2) + ', ' +
-                                data.FaceDetails[0].Emotions[1].Type + ': ' + 
-                                data.FaceDetails[0].Emotions[1].Confidence.toFixed(2) + ', ' + ', ' + 
-                                data.FaceDetails[0].Emotions[2].Type + ': ' +  
-                                data.FaceDetails[0].Emotions[0].Confidence.toFixed(2)  + '</p>';
-                        num += 1;
-                    }
-                })
+            rekognition.detectFaces(params, function(err, data) {
+                if (err) {
+                    console.log(err, err.stack); 
+                } else {
+                    console.log('ok passed', imageName[num]);
+                    console.log(data.FaceDetails[0].Emotions);
+                    result += '<p>' + imageName[num] + ', ' +
+                            data.FaceDetails[0].Gender.Value + ', ' +
+                            data.FaceDetails[0].Emotions[0].Type + ': ' +
+                            data.FaceDetails[0].Emotions[0].Confidence.toFixed(2) + ', ' +
+                            data.FaceDetails[0].Emotions[1].Type + ': ' + 
+                            data.FaceDetails[0].Emotions[1].Confidence.toFixed(2) + ', ' + ', ' + 
+                            data.FaceDetails[0].Emotions[2].Type + ': ' +  
+                            data.FaceDetails[0].Emotions[0].Confidence.toFixed(2)  + '</p>';
+                    num += 1;
+                }
             })
         }  
     }, 1000);
-
-
-    // 
 
     setTimeout(() => {
         res.render('amazonDetection.ejs', 
@@ -163,10 +146,94 @@ router.post('/rekognition', uploader.array('images', 10),  function(req, res, ne
             targetImageList: targetImageTagList
         });
     }, 5000);
-    
 
-  
-    // res.end(JSON.stringify(req.body));
+})
+
+router.post('/rekognition/recognition', uploader.array('images', 10),  function(req, res) {
+
+
+    const files = req.files;
+    let imageName = [];
+
+
+    for (var i = 0; i < files.length; i++) {
+        imageName[i] = req.files[i].originalname;
+        console.log(imageName[i]);
+
+        var params = {
+            localFile: "./public/images/" + imageName[i], 
+            s3Params: {
+              Bucket: "hello-garden",  
+              Key: imageName[i], 
+            },
+        };
+
+        var uploader = client.uploadFile(params);
+      
+        uploader.on('error', function(err) {
+            console.error("unable to upload:", err.stack);
+        });
+        uploader.on('progress', function() {
+            console.log("uploading...");
+        });
+        uploader.on('end', function() {
+            console.log("done uploading");  
+        });
+    }
+    
+    console.log('check', imageName);
+
+    var sourceImageTagList = '';
+    var targetImageTagList = '';
+    var result = '';
+
+
+    sourceImageTagList = '<img class="box" src="https://s3.amazonaws.com/hello-garden/' + imageName[0] + '" height=230 width=200>';
+
+    for (var i = 0; i < files.length - 1; i++) {
+        targetImageTagList += '<img class="box" src="https://s3.amazonaws.com/hello-garden/' + imageName[i + 1] + '" height=230 width=200>';
+
+
+        console.log(files[0].originalname);
+        console.log(files[1].originalname);
+        var params = {
+            SimilarityThreshold: 90, 
+            SourceImage: {
+                S3Object: {
+                    Bucket: "hello-garden", 
+                    Name: files[i].originalname
+                }
+            }, 
+            TargetImage: {
+                S3Object: {
+                    Bucket: "hello-garden", 
+                    Name: files[i + 1].originalname
+                }
+            }
+        };
+
+        rekognition.compareFaces(params, function(err, data) {
+            if (err) {
+                console.log(err, err.stack);
+            } else {
+                if (data.FaceMatches[0] !== undefined) {
+                    result += '<p>Similarity: ' + data.FaceMatches[0].Similarity + '</p>';
+                } else {
+                    result += '<p>Unmatched' + '</p>';
+                }
+            } 
+        })    
+    }
+        
+    setTimeout(() => {
+        res.render('amazonRecognition.ejs', 
+        {
+            title : 'Amazon Rekognition',
+            content: result,
+            sourceImageList: sourceImageTagList,
+            targetImageList: targetImageTagList
+        });
+    }, 5000);
     
 })
 

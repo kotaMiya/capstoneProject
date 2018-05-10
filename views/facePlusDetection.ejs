@@ -12,19 +12,19 @@
        
     </head>
     <body>
-            <content>
+        <content>
         <header class="headerContainer">
             <div class="homeText">
                     <h1 onclick="changeText(this)"><%= title %></h1>
             </div>
             <div class="toggleWrapper">
                 <ul>
-                    <li class="detectionSide">
-                        <a href="/api/rekognition/detection" class="toggle">Detection</a>
-                    </li>
-                    <li>
-                        <a href="/api/rekognition/recognition" class="toggle reco">Recognition</a>
-                    </li>
+                <li class="detectionSide">
+                    <a href="/api/faceplusplus/detection" class="toggle dete">Detection</a>
+                </li>
+                <li>
+                    <a href="/api/faceplusplus/recognition" class="toggle">Recognition</a>
+                </li>
                 </ul>
             </div>
             <nav>
@@ -49,36 +49,26 @@
             </nav>
         </header>
        
-        <div class="amazonMainContainer">
+        <div class="facePlusMainContainer">
             <div id="firstScreen">
-                <div id="pictureScreen" class="horizontalScrollWrapper">
-                        <div id="test" class="scrollInner">
-                            <%- sourceImageList %>
-                        </div>
+                <div id="pictureScreenDetection" class="horizontalScrollWrapper">
+                   
+                    <div id="test" class="scrollInner">
+                        <%- sourceImageList %>
                     </div>
-        
-                    <div id="targetScreen" class="horizontalScrollWrapper">
-                        <div id="target" class="scrollInner">
-                            <%- targetImageList %>
-                        </div>
-                    </div>
+            
+                </div>
             </div>
             
             <div class="leftSideButton">
-                <form method="POST" action="/api/rekognition/recognition"  onsubmit = "hs.loading()" enctype="multipart/form-data">
+                <form method="POST" action="/api/facePlusPlus/detection"  onsubmit = "hs.loading()" enctype="multipart/form-data">
                     <ul class="button-list">
                         <li>
                             <label class="uploadButton">
-                                Upload Source Image
+                                Upload Images
                                 <input type="file" id="files" name="images" value="hello" multiple onchange="readSourceImages(this)">
                             </label>
                         </li>   
-                        <li>
-                            <label class="uploadButton">
-                                Upload Target Image
-                                <input type="file" id="foo" name="images" value="hello" multiple onchange="readTargetImages(this)">
-                            </label>
-                        </li>  
                         <li>
                             <input type="submit" value="Run" class="detectButton">
                         </li>   
@@ -87,7 +77,7 @@
                 
             </div>
 
-            <div class="resultScreen" class="verticalScrollWrapper">
+            <div class="resultScreenDetection" class="verticalScrollWrapper">
                 <div class="verticalScrollInner">
                     <div id="resultText">
                         <%- content %>

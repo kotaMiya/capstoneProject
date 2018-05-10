@@ -4,6 +4,7 @@ import multer from 'multer';
 import { amazonRoutes } from '../apis/Amazon';
 import { googleRoutes } from '../apis/Google';
 import { microsoftRoutes } from '../apis/Microsoft';
+import { facePlusRoutes } from '../apis/Face++';
 import * as path from 'path';
 
 
@@ -24,7 +25,7 @@ app.use(bodyParser.urlencoded({
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/api', [amazonRoutes, googleRoutes, microsoftRoutes]);
+app.use('/api', [amazonRoutes, googleRoutes, microsoftRoutes, facePlusRoutes]);
 
 
 // draw home screen 

@@ -7,7 +7,6 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
         <script src="https://github.com/eligrey/FileSaver.js"></script>
-        <script src='/js/hangsuper.js'></script>
         <script src='/js/amazon.js'></script>
         
        
@@ -40,7 +39,7 @@
                         <a href='/api/rekognition/detection'>Amazon</a>
                     </li>
                     <li>
-                        <a href='/api/faceplusplus'>Face++</a>
+                        <a href='/api/facePlusPlus/detection'>Face++</a>
                     </li>
                     <li>
                         <a href='/api/bioid'>BioID</a>
@@ -62,7 +61,7 @@
             </div>
             
             <div class="leftSideButton">
-                <form method="POST" action="/api/rekognition"  onsubmit = "hs.loading()" enctype="multipart/form-data">
+                <form method="POST" action="/api/rekognition/detection"  onsubmit = "hs.loading()" enctype="multipart/form-data">
                     <ul class="button-list">
                         <li>
                             <label class="uploadButton">

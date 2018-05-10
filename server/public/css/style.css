@@ -209,7 +209,7 @@ input[type="file"] {
     flex-wrap: wrap;
     flex-direction: column;
     height: 700px;
-    background-color: #E9872E;
+    background-color: #F29A33;
 }
 
 
@@ -227,7 +227,19 @@ input[type="file"] {
     background-color: #16A6B6;
 }
 
+/**
+*
+*    -- Face++ --
+*
+*/
 
+.facePlusMainContainer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    height: 700px;
+    background-color: #2C2C2C;
+}
 
 
 
