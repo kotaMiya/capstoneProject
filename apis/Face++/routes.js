@@ -20,8 +20,8 @@ const uploader = multer({ storage })
 
 cloudinary.config({
     cloud_name: 'dyp8nhjhh',
-    api_key: 'ACCESS_KEY_ID',
-    api_secret: 'SECRET_ACCESS_KEY'
+    api_key: 'API_KEY',
+    api_secret: 'API_SECRET'
   });
 
 
@@ -30,8 +30,7 @@ router.get('/facePlusPlus/detection', function(req, res) {
     {
         title : 'Face++',
         content: '',
-        sourceImageList: '',
-        targetImageList: ''
+        imageList: '',
     });
 })
 
@@ -47,73 +46,130 @@ router.get('/faceplusplus/recognition', function(req, res) {
 
 
 
-const API_KEY = 'ACCESS_KEY_ID';
-const API_SECRET = 'SECRET_ACCESS_KEY';
-
+const API_KEY = 'API_KEY';
+const API_SECRET = 'API_SECRET';
 
 
 
 router.post('/faceplusplus/detection', uploader.array('images', 10), function(req, res) {
-    const files = req.files[0];
-    console.log(files);
-
-    let imageName = [];
-    var sourceImageTagList = '';
-    var result = '';
-
-
-    for (var i = 0; i < req.files.length; i++) {
-        imageName[i] = req.files[i].originalname;
-        console.log(imageName[i]);
-    }
     
-    console.log('check', imageName);
+    const files = req.files;
+    
+    var imageTagList = '';
 
-    var path = files.path;
+    var imageName = [];
+
+    for (var i = 0; i < files.length; i++) {
+        imageName.push(files[i].originalname);
+    }
 
 
-    cloudinary.uploader.upload(path, function(result) {
-        var imagePath = result.url;
+    const ENDPOINT = 'https://api-us.faceplusplus.com/facepp/v3/detect';
 
-        console.log('image', imagePath);
 
-        for (var i = 0; i < req.files.length; i++) {
-            sourceImageTagList += '<img class="box" src="' + imagePath + '" height=230 width=200>';
+    let promise = new Promise(async (resolve, reject) => {
+        var imagePath = getImagePath(files);
+
+        var imageUrl = [];
+
+        console.log('#1', imagePath);
+      
+            
+        let data = await uploadImage(imagePath);
+
+        console.log('#2', data);
+
+        imageUrl = data;    // this is an array
+
+        resolve(imageUrl);  //  resolve them as one of array.
+    })
+    .then(async (imageUrl) => {
+
+        console.log(imageUrl);
+
+        let result = await requestApi(imageUrl);
+
+        console.log('#3', result);
+
+        return result;
+    }) 
+    .then((result) => {
+        console.log('#4', result);
+        var resultTag = '';
+
+        console.log(result[0].faces[0].attributes);
+
+        for (var i = 0; i < result.length; i++) {
+            resultTag += '<p>';
+            resultTag += imageName[i];
+            resultTag += ', ' + result[i].faces[0].attributes.gender.value;
+            resultTag += ', SADNESS: ' + result[i].faces[0].attributes.emotion['sadness'];
+            resultTag += ', ANGER: ' + result[i].faces[0].attributes.emotion['anger'];
+            resultTag += ', HAPPINESS: ' + result[i].faces[0].attributes.emotion['happiness'];
+            resultTag += '</p>';
         }
 
+        
 
-        const path_url = 'https://api-us.faceplusplus.com/facepp/v3/detect';
+        res.render('facePlusDetection.ejs', 
+        {
+            title : 'Face++',
+            content: resultTag,
+            imageList: imageTagList,
+        });
+    })
+
+
+    function getImagePath(imageFiles) {
+        var path = [];
+
+        for (var i = 0; i < imageFiles.length; i++) {
+            path.push(imageFiles[i].path);
+        }
+
+        return path;
+    }
+
+    async function uploadImage(path) {
     
-        axios.post(path_url, qs.stringify({
-            api_key: API_KEY,
-            api_secret: API_SECRET,
-            image_url: imagePath,
-            return_attributes: 'gender,emotion',
-        }), {
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        })
-        .then(data => {
-       
-            console.log(imageName);
-            console.log(data.data.faces[0]);
-            result = imageName;
-            result += ', ' + data.data.faces[0].attributes.gender.value;
-            result += ', SADNESS: ' + data.data.faces[0].attributes.emotion['sadness'];
-            result += ', ANGER: ' + data.data.faces[0].attributes.emotion['anger'];
-            result += ', HAPPINESS: ' + data.data.faces[0].attributes.emotion['happiness'];
+        var imageUrl = [];
 
-            setTimeout(() => {
-                res.render('facePlusDetection.ejs', 
-                {
-                    title : 'Face++',
-                    content: result,
-                    sourceImageList: sourceImageTagList,
-                });
-            }, 5000);
+        var counter = 0;
+
+        for (var i = 0; i < path.length; i++) {
+            await cloudinary.uploader.upload(path[i], function(result) {
+                imageUrl.push(result.url);
+                imageTagList += '<img class="box" src="' + imageUrl[counter] + '" height=230 width=200>';
+                counter++;
+            })    
+        }
+
+        return imageUrl;
+    }
+
+    async function requestApi(imageUrl) {
+        try {
+            var result = [];
+
+            for (var i = 0; i < imageUrl.length; i++) {
+                var { data } = await axios.post(ENDPOINT, qs.stringify({
+                    api_key: API_KEY,
+                    api_secret: API_SECRET,
+                    image_url: imageUrl[i],
+                    return_attributes: 'gender,emotion',
+                }), {
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                });    
+                result.push(data)
+            }
+                
+            return result;
             
-        })
-        .catch(err => console.log(err))
-    })  
+        } catch(e) {
+            console.log(e);
+        }
+    } 
+    
 })
 
 
