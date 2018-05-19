@@ -3,7 +3,7 @@
     <head>
         <title>Capstone</title>
         <link rel='stylesheet' href='/css/style.css' />
-    
+ 
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
         <script src="https://github.com/eligrey/FileSaver.js"></script>
@@ -20,10 +20,10 @@
             <div class="toggleWrapper">
                 <ul>
                     <li class="detectionSide">
-                        <a href="/api/rekognition/detection" class="toggle_off_btn">Detection</a>
+                        <a href="/api/kairos/detection" class="toggle_off_btn">Detection</a>
                     </li>
                     <li>
-                        <a href="/api/rekognition/recognition" class="toggle_on_btn">Recognition</a>
+                        <a href="/api/kairos/recognition" class="toggle_on_btn">Recognition</a>
                     </li>
                 </ul>
             </div>
@@ -49,7 +49,7 @@
             </nav>
         </header>
        
-        <div class="amazonMainContainer">
+        <div class="kairosMainContainer">
             <div id="firstScreen">
                 <div id="pictureScreen" class="horizontalScrollWrapper">
                         <div id="test" class="scrollInner">
@@ -65,12 +65,12 @@
             </div>
             
             <div class="leftSideButton">
-                <form method="POST" action="/api/rekognition/recognition"  onsubmit = "hs.loading()" enctype="multipart/form-data">
+                <form method="POST" action="/api/kairos/recognition"  onsubmit = "hs.loading()" enctype="multipart/form-data">
                     <ul class="button-list">
                         <li>
                             <label class="uploadButton">
                                 Upload Source Image
-                                <input type="file" id="files" name="images" value="hello" multiple onchange="readSourceImages(this)">
+                                <input type="file" id="files" name="images" value="hello" onchange="readSourceImages(this)">
                             </label>
                         </li>   
                         <li>

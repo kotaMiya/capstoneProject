@@ -158,28 +158,63 @@ input[type="file"] {
 
 }
 
+
+/**
+/
+/   toggle Button
+/
+*/
+
 .toggleWrapper {
-    background-color: #aaa;
+    background-color: #fff;
    color: white;
-    height: 60px;
-    border-radius: 50px;
+    height: 80px;
+    border-radius: 70px;
     padding-right: 10px;
 }
 
-.toggle { 
-    padding: 5px;
-    border-radius: 5px;   
-}
+.toggle_on_btn{
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
+    padding: 0.25em 0;
+    text-decoration: none;
+    color: #2C5379;   
+ }
+ 
+ .toggle_on_btn:before{
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 4px;
+    top:100%;
+    left: 0;
+    border-radius: 3px;
+    background:#2C5379;
+    transition: .2s;
+ }
+ 
+ .toggle_on_btn:hover:before {
+     top: -webkit-calc(100% - 3px);
+     top: calc(100% - 3px);
+ }
 
-.reco {
-    color: white;
-    background-color: #333333;
-}
 
-.dete {
-    color: white;
-    background-color: #333333;
-}
+ .toggle_off_btn{
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
+    padding: 0.25em 0;
+    text-decoration: none;
+    color: #93B8CA;   
+ }
+ 
+ 
+ .toggle_off_btn:hover:before {
+     top: -webkit-calc(100% - 3px);
+     top: calc(100% - 3px);
+ }
+
 
 
 /**
@@ -240,6 +275,22 @@ input[type="file"] {
     height: 700px;
     background-color: #2C2C2C;
 }
+
+
+/**
+*
+*    -- Kairos --
+*
+*/
+
+.kairosMainContainer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    height: 700px;
+    background-color: #4A9D8B;
+}
+
 
 
 

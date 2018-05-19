@@ -1,13 +1,32 @@
 import { Router } from 'express';
 import AWS from 'aws-sdk';
-var multer = require('multer');
+import multer from 'multer';
 var s3 = require('s3');
 
-AWS.config.update({region:'us-east-1'});
-var rekognition = new AWS.Rekognition();
-
 import * as path from 'path';
-import { Number } from 'core-js';
+
+import {
+    start,
+    end,
+    timeElapsed
+} from '../utils/controller';
+
+import { AMAZON_API_KEY, AMAZON_SECRET_KEY } from '../utils/apiKey';
+
+
+AWS.config.update(
+    {
+        accessKeyId: AMAZON_API_KEY,
+        secretAccessKey: AMAZON_SECRET_KEY
+    }
+);
+
+AWS.config.update({region:'us-east-1'});
+var rekognition = new AWS.Rekognition({
+    region: 'us-east-1'
+});
+
+
 
 const router = new Router();
 
@@ -30,8 +49,8 @@ var client = s3.createClient({
     multipartUploadThreshold: 20971520,  
     multipartUploadSize: 15728640, 
     s3Options: {
-      accessKeyId: "ACCESS_KEY_ID", 
-      secretAccessKey: "SECRET_ACCESS_KEY",  
+      accessKeyId: AMAZON_API_KEY, 
+      secretAccessKey: AMAZON_SECRET_KEY,  
     },
 });
 
@@ -61,6 +80,9 @@ router.post('/rekognition/detection', uploader.array('images', 10), function(req
     const files = req.files;
     let imageName = [];
 
+    // start timer
+    var startTime = start();
+    var sumRuntime = 0;
 
     for (var i = 0; i < files.length; i++) {
         imageName[i] = req.files[i].originalname;
@@ -102,7 +124,6 @@ router.post('/rekognition/detection', uploader.array('images', 10), function(req
     setTimeout(() => {
     
         for (var i = 0; i < imageName.length; i++) {
-            var num = 0;
 
             var num = 0;
     
@@ -133,9 +154,22 @@ router.post('/rekognition/detection', uploader.array('images', 10), function(req
                             data.FaceDetails[0].Emotions[0].Confidence.toFixed(2)  + '</p>';
                     num += 1;
                 }
+
+                var endTime = end();
+                sumRuntime += timeElapsed(startTime, endTime);
+
+                if (num == imageName.length) {
+                    result += '<br><p>' + sumRuntime.toFixed(2) + ' seconds</p>';
+                }
+
+                
             })
-        }  
+        }
+        
+        
     }, 1000);
+
+    
 
     setTimeout(() => {
         res.render('amazonDetection.ejs', 
@@ -155,6 +189,8 @@ router.post('/rekognition/recognition', uploader.array('images', 10),  function(
     const files = req.files;
     let imageName = [];
 
+    var startTime = start();
+    var sumRuntime = 0;
 
     for (var i = 0; i < files.length; i++) {
         imageName[i] = req.files[i].originalname;
@@ -187,6 +223,7 @@ router.post('/rekognition/recognition', uploader.array('images', 10),  function(
     var targetImageTagList = '';
     var result = '';
 
+    var counter = 0;
 
     sourceImageTagList = '<img class="box" src="https://s3.amazonaws.com/hello-garden/' + imageName[0] + '" height=230 width=200>';
 
@@ -196,12 +233,14 @@ router.post('/rekognition/recognition', uploader.array('images', 10),  function(
 
         console.log(files[0].originalname);
         console.log(files[1].originalname);
+        
+
         var params = {
             SimilarityThreshold: 90, 
             SourceImage: {
                 S3Object: {
                     Bucket: "hello-garden", 
-                    Name: files[i].originalname
+                    Name: files[0].originalname
                 }
             }, 
             TargetImage: {
@@ -213,15 +252,27 @@ router.post('/rekognition/recognition', uploader.array('images', 10),  function(
         };
 
         rekognition.compareFaces(params, function(err, data) {
+            
+
             if (err) {
                 console.log(err, err.stack);
             } else {
+                counter++;
                 if (data.FaceMatches[0] !== undefined) {
                     result += '<p>Similarity: ' + data.FaceMatches[0].Similarity + '</p>';
                 } else {
                     result += '<p>Unmatched' + '</p>';
                 }
             } 
+            var endTime = end();
+            sumRuntime += timeElapsed(startTime, endTime);
+
+            
+
+            if (counter === files.length - 1) {
+                result += '<br><p>' + sumRuntime.toFixed(2) + ' seconds</p>';
+            }
+
         })    
     }
         

@@ -5,6 +5,7 @@
   "author": "Kota Miyamoto",
   "license": "MIT",
   "dependencies": {
+    "@google-cloud/vision": "^0.19.0",
     "aws-sdk": "^2.208.0",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
@@ -14,6 +15,7 @@
     "cloudinary": "^1.11.0",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
+    "form-data": "^2.3.2",
     "fs": "^0.0.1-security",
     "fs-extra": "^5.0.0",
     "klaw-sync": "^3.0.2",

@@ -27,7 +27,6 @@ function readSourceImages(input) {
                     imgEle.width = 200;
                     imgEle.className = 'box';
                     document.getElementById('test').appendChild(imgEle);
-                    // document.getElementById('imageUrl').value = e.target.result;
                 };
         
                 reader.readAsDataURL(input.files[i]);
@@ -57,7 +56,6 @@ function readTargetImages(input) {
                     imgEle.width = 200;
                     imgEle.className = 'box';
                     document.getElementById('target').appendChild(imgEle);
-                    // document.getElementById('imageUrl').value = e.target.result;
                 };
         
                 reader.readAsDataURL(input.files[i]);
