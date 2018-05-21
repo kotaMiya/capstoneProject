@@ -28,15 +28,6 @@ const storage =  multer.diskStorage({
 const uploader = multer({ storage })
 
 
-<<<<<<< HEAD
-=======
-cloudinary.config({
-    cloud_name: 'dyp8nhjhh',
-    api_key: 'API_KEY',
-    api_secret: 'API_SECRET'
-  });
-
->>>>>>> acd29ed949c73fa57d221250bc96847a381739b9
 
 router.get('/facePlusPlus/detection', function(req, res) {
     res.render('facePlusDetection.ejs', 
@@ -59,7 +50,6 @@ router.get('/faceplusplus/recognition', function(req, res) {
 
 
 
-<<<<<<< HEAD
 router.post('/faceplusplus/detection', uploader.array('images', 10), function(req, res) {
     
     const files = req.files;
@@ -67,17 +57,12 @@ router.post('/faceplusplus/detection', uploader.array('images', 10), function(re
     var imageTagList = '';
     var imageName = [];
 
-=======
-const API_KEY = 'API_KEY';
-const API_SECRET = 'API_SECRET';
->>>>>>> acd29ed949c73fa57d221250bc96847a381739b9
 
     for (var i = 0; i < files.length; i++) {
         imageName.push(files[i].originalname);
     }
 
 
-<<<<<<< HEAD
     // start time meseauring
     var startTime = start();
 
@@ -120,56 +105,6 @@ const API_SECRET = 'API_SECRET';
 
         console.log(result[0].faces[0].attributes);
 
-=======
-router.post('/faceplusplus/detection', uploader.array('images', 10), function(req, res) {
-    
-    const files = req.files;
-    
-    var imageTagList = '';
-
-    var imageName = [];
-
-    for (var i = 0; i < files.length; i++) {
-        imageName.push(files[i].originalname);
-    }
-
-
-    const ENDPOINT = 'https://api-us.faceplusplus.com/facepp/v3/detect';
-
-
-    let promise = new Promise(async (resolve, reject) => {
-        var imagePath = getImagePath(files);
-
-        var imageUrl = [];
-
-        console.log('#1', imagePath);
-      
-            
-        let data = await uploadImage(imagePath);
-
-        console.log('#2', data);
-
-        imageUrl = data;    // this is an array
-
-        resolve(imageUrl);  //  resolve them as one of array.
-    })
-    .then(async (imageUrl) => {
-
-        console.log(imageUrl);
-
-        let result = await requestApi(imageUrl);
-
-        console.log('#3', result);
-
-        return result;
-    }) 
-    .then((result) => {
-        console.log('#4', result);
-        var resultTag = '';
-
-        console.log(result[0].faces[0].attributes);
-
->>>>>>> acd29ed949c73fa57d221250bc96847a381739b9
         for (var i = 0; i < result.length; i++) {
             resultTag += '<p>';
             resultTag += imageName[i];
@@ -180,10 +115,7 @@ router.post('/faceplusplus/detection', uploader.array('images', 10), function(re
             resultTag += '</p>';
         }
 
-<<<<<<< HEAD
         resultTag += '<br><p>' + runtime + ' seconds</p>';
-=======
->>>>>>> acd29ed949c73fa57d221250bc96847a381739b9
         
 
         res.render('facePlusDetection.ejs', 
@@ -195,36 +127,7 @@ router.post('/faceplusplus/detection', uploader.array('images', 10), function(re
     })
 
 
-<<<<<<< HEAD
     const ENDPOINT = 'https://api-us.faceplusplus.com/facepp/v3/detect';
-=======
-    function getImagePath(imageFiles) {
-        var path = [];
-
-        for (var i = 0; i < imageFiles.length; i++) {
-            path.push(imageFiles[i].path);
-        }
-
-        return path;
-    }
-
-    async function uploadImage(path) {
-    
-        var imageUrl = [];
-
-        var counter = 0;
-
-        for (var i = 0; i < path.length; i++) {
-            await cloudinary.uploader.upload(path[i], function(result) {
-                imageUrl.push(result.url);
-                imageTagList += '<img class="box" src="' + imageUrl[counter] + '" height=230 width=200>';
-                counter++;
-            })    
-        }
-
-        return imageUrl;
-    }
->>>>>>> acd29ed949c73fa57d221250bc96847a381739b9
 
     async function requestApi(imageUrl) {
         try {
@@ -232,13 +135,8 @@ router.post('/faceplusplus/detection', uploader.array('images', 10), function(re
 
             for (var i = 0; i < imageUrl.length; i++) {
                 var { data } = await axios.post(ENDPOINT, qs.stringify({
-<<<<<<< HEAD
                     api_key: FACEPP_API_KEY,
                     api_secret: FACEPP_SECRET_KEY,
-=======
-                    api_key: API_KEY,
-                    api_secret: API_SECRET,
->>>>>>> acd29ed949c73fa57d221250bc96847a381739b9
                     image_url: imageUrl[i],
                     return_attributes: 'gender,emotion',
                 }), {
