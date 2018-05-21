@@ -103,18 +103,25 @@ router.post('/kairos/detection', uploader.array('images', 10), function(req, res
 
         var resultTag = '';
 
+    
         for (var i = 0; i < emotionResult.length; i++) {
-            resultTag += '<p>';
-            resultTag += imageName[i];
-            resultTag += ', ' + emotionResult[i][0].demographics.gender;
-            resultTag += ', ANGER: ' + emotionResult[i][0].average_emotion['anger'];
-            resultTag += ', SADNESS: ' + emotionResult[i][0].average_emotion['sadness'];
-            resultTag += ', FEAR: ' + emotionResult[i][0].average_emotion['fear'];
-            resultTag += ', DISGUST: ' + emotionResult[i][0].average_emotion['disgust'];
-            resultTag += ', JOY: ' + emotionResult[i][0].average_emotion['joy'];
-            resultTag += ', SURPRISE: ' + emotionResult[i][0].average_emotion['surprise'];
-            resultTag += '</p>';
+            if (emotionResult[i][0] === undefined) {
+                resultTag += '<p>Cannot detect the face</p>';
+            } else {
+                resultTag += '<p>';
+                resultTag += imageName[i];
+                resultTag += ', ' + emotionResult[i][0].demographics.gender;
+                resultTag += ', ANGER: ' + emotionResult[i][0].average_emotion['anger'];
+                resultTag += ', SADNESS: ' + emotionResult[i][0].average_emotion['sadness'];
+                resultTag += ', FEAR: ' + emotionResult[i][0].average_emotion['fear'];
+                resultTag += ', DISGUST: ' + emotionResult[i][0].average_emotion['disgust'];
+                resultTag += ', JOY: ' + emotionResult[i][0].average_emotion['joy'];
+                resultTag += ', SURPRISE: ' + emotionResult[i][0].average_emotion['surprise'];
+                resultTag += '</p>';
+                }
         }
+        
+    
 
         console.log('#5', imageTagList);
         
