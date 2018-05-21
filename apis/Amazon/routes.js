@@ -151,7 +151,7 @@ router.post('/rekognition/detection', uploader.array('images', 10), function(req
                             data.FaceDetails[0].Emotions[0].Type + ': ' +
                             data.FaceDetails[0].Emotions[0].Confidence.toFixed(2) + ', ' +
                             data.FaceDetails[0].Emotions[1].Type + ': ' + 
-                            data.FaceDetails[0].Emotions[1].Confidence.toFixed(2) + ', ' + ', ' + 
+                            data.FaceDetails[0].Emotions[1].Confidence.toFixed(2) + ', ' + 
                             data.FaceDetails[0].Emotions[2].Type + ': ' +  
                             data.FaceDetails[0].Emotions[0].Confidence.toFixed(2)  + '| ' + runtime + 'seconds</p>';
                     num += 1;
