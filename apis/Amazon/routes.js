@@ -142,6 +142,8 @@ router.post('/rekognition/detection', uploader.array('images', 10), function(req
                 if (err) {
                     console.log(err, err.stack); 
                 } else {
+                    var endTime = end();
+                    var runtime = timeElapsed(startTime, endTime);
                     console.log('ok passed', imageName[num]);
                     console.log(data.FaceDetails[0].Emotions);
                     result += '<p>' + imageName[num] + ', ' +
@@ -151,11 +153,11 @@ router.post('/rekognition/detection', uploader.array('images', 10), function(req
                             data.FaceDetails[0].Emotions[1].Type + ': ' + 
                             data.FaceDetails[0].Emotions[1].Confidence.toFixed(2) + ', ' + ', ' + 
                             data.FaceDetails[0].Emotions[2].Type + ': ' +  
-                            data.FaceDetails[0].Emotions[0].Confidence.toFixed(2)  + '</p>';
+                            data.FaceDetails[0].Emotions[0].Confidence.toFixed(2)  + '| ' + runtime + 'seconds</p>';
                     num += 1;
                 }
 
-                var endTime = end();
+                
                 sumRuntime += timeElapsed(startTime, endTime);
 
                 if (num == imageName.length) {
