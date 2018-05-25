@@ -1,6 +1,9 @@
 {
   "name": "capstoneProject",
   "version": "1.0.0",
+  "scripts": {
+    "start": "node index.js"
+  },
   "main": "index.js",
   "author": "Kota Miyamoto",
   "license": "MIT",
