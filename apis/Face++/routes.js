@@ -38,7 +38,7 @@ router.get('/facePlusPlus/detection', function(req, res) {
     });
 })
 
-router.get('/faceplusplus/recognition', function(req, res) {
+router.get('/facePlusPlus/recognition', function(req, res) {
     res.render('facePlusRecognition.ejs', 
     {
         title : 'Face++',
@@ -50,7 +50,7 @@ router.get('/faceplusplus/recognition', function(req, res) {
 
 
 
-router.post('/faceplusplus/detection', uploader.array('images', 10), function(req, res) {
+router.post('/facePlusPlus/detection', uploader.array('images', 10), function(req, res) {
     
     const files = req.files;
     
@@ -133,7 +133,11 @@ router.post('/faceplusplus/detection', uploader.array('images', 10), function(re
         try {
             var result = [];
 
+            
+
             for (var i = 0; i < imageUrl.length; i++) {
+                let startTime = start();
+
                 var { data } = await axios.post(ENDPOINT, qs.stringify({
                     api_key: FACEPP_API_KEY,
                     api_secret: FACEPP_SECRET_KEY,
@@ -142,6 +146,9 @@ router.post('/faceplusplus/detection', uploader.array('images', 10), function(re
                 }), {
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                 });    
+
+                let endTime = end();
+                let runtime = timeElapsed(startTime, endTime);
                 result.push(data)
             }
                 
@@ -155,7 +162,7 @@ router.post('/faceplusplus/detection', uploader.array('images', 10), function(re
 })
 
 
-router.post('/faceplusplus/recognition', uploader.array('images', 10), function(req, res) {
+router.post('/facePlusPlus/recognition', uploader.array('images', 10), function(req, res) {
 
     const files = req.files;
 

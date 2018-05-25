@@ -1,6 +1,6 @@
-body {
+html, body {
     background-color: #F8F8F8;
-    
+    height: 95%;
 }
 
 a {
@@ -38,55 +38,79 @@ li a:hover {
     color: #333333;
 }
 
-#firstScreen {
-    flex-direction: column;
+.leftScreen {
+    flex: column;
+    flex: 2;
+    height: 100%;
 }
 
-#pictureScreen {
-    flex: 0.5;
-    height: 300px;
-    width: 900px;
+.rightScreen {
+    flex: column;
+    flex: 1;
+    height: 100%;
+}
+
+/*  detection */
+
+#pictureScreenDetection {
+    height: 88%;
+  
     margin: 5px;
     background-color: #ffffff;
 }
 
-#pictureScreenDetection {
+.resultScreenDetection {
+
+    height: 88%;
+    
+    margin: 5px;
+    background-color: #ffffff;
+    font-size: 14px;
+}
+
+/* Recognition */
+
+.imageScreen {
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+}
+
+.rightScreenForRecognition {
     flex: 1;
-    height: 300px;
-    width: 99%;
+}
+
+
+#pictureScreen {
+    flex: 2;
+    height: 80%;
+
     margin: 5px;
     background-color: #ffffff;
 }
 
 
 #targetScreen {
-    flex: 0.5;
-    height: 300px;
-    width: 900px;
+    flex: 2;
     margin: 5px;
+    height: 50%;
     background-color: #ffffff;
+}
+
+.rightScreen {
+    display: flex;
+    flex-direction: column;
 }
 
 .resultScreen {
-    flex: 0.94;
-    height: 340px;
-    width: 500px;
-    margin: 5px;
-    background-color: #ffffff;
-    font-size: 14px;
-}
-
-.resultScreenDetection {
     flex: 1;
-    height: 340px;
-    width: 99%;
+    height: 86%;
     margin: 5px;
     background-color: #ffffff;
     font-size: 14px;
 }
 
 .leftSideButton {
-    display: inline-flex;
     height: 10x;
 }
 
@@ -119,13 +143,9 @@ input[type="file"] {
 }
 
 
-.rightSideButton {
-    display: flex;
-    margin-bottom: 7px;
-}
-
 .rightSideButton input {
     color: white;
+   
 }
 
 .rightSideButton a {
@@ -134,6 +154,7 @@ input[type="file"] {
     height: 20px;
     padding: 10px;
     margin-left: 10px;
+    margin-top: 10px;
 }
 
 .downloadButton {
@@ -145,6 +166,7 @@ input[type="file"] {
     border-radius: 12px;
     border-style: none;
     padding: 8px;
+    margin-top: 10px;
 }
 
 .downloadButton a {
@@ -226,8 +248,8 @@ input[type="file"] {
 .googleMainContainer {
     display: flex;
     flex-wrap: wrap;
-    flex-direction: column;
-    height: 630px;
+    flex-direction: row;
+    height: 95%;
     background-color: #DE4830;
 }
 
@@ -242,8 +264,8 @@ input[type="file"] {
 .amazonMainContainer {
     display: flex;
     flex-wrap: wrap;
-    flex-direction: column;
-    height: 700px;
+    flex-direction: row;
+    height: 95%;
     background-color: #F29A33;
 }
 
@@ -257,8 +279,8 @@ input[type="file"] {
 .msMainContainer {
     display: flex;
     flex-wrap: wrap;
-    flex-direction: column;
-    height: 630px;
+    flex-direction: row;
+    height: 95%;
     background-color: #16A6B6;
 }
 
@@ -271,8 +293,8 @@ input[type="file"] {
 .facePlusMainContainer {
     display: flex;
     flex-wrap: wrap;
-    flex-direction: column;
-    height: 700px;
+    flex-direction: row;
+    height: 95%;
     background-color: #2C2C2C;
 }
 
@@ -286,8 +308,8 @@ input[type="file"] {
 .kairosMainContainer {
     display: flex;
     flex-wrap: wrap;
-    flex-direction: column;
-    height: 700px;
+    flex-direction: row;
+    height: 95%;
     background-color: #4A9D8B;
 }
 

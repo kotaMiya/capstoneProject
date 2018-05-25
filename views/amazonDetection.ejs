@@ -4,14 +4,9 @@
         <title>Capstone</title>
         <link rel='stylesheet' href='/css/style.css' />
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
-        <script src="https://github.com/eligrey/FileSaver.js"></script>
         <script src='/js/amazon.js'></script>
-        
-       
     </head>
     <body>
-            <content>
         <header class="headerContainer">
             <div class="homeText">
                     <h1 onclick="changeText(this)"><%= title %></h1>
@@ -29,7 +24,7 @@
             <nav>
                 <ul style="list-style-type:none">
                     <li>
-                        <a href='/api/vision'>Google</a>
+                        <a href='/api/vision/detection'>Google</a>
                     </li>
                     <li>
                         <a href='/api/face'>Microsoft</a>
@@ -49,59 +44,53 @@
         </header>
        
         <div class="amazonMainContainer">
-            <div id="firstScreen">
+            <div class="leftScreen">
                 <div id="pictureScreenDetection" class="horizontalScrollWrapper">
-                   
+                    
                     <div id="test" class="scrollInner">
                         <%- sourceImageList %>
                     </div>
             
                 </div>
-            </div>
             
-            <div class="leftSideButton">
-                <form method="POST" action="/api/rekognition/detection"  onsubmit = "hs.loading()" enctype="multipart/form-data">
-                    <ul class="button-list">
-                        <li>
-                            <label class="uploadButton">
-                                Upload Images
-                                <input type="file" id="files" name="images" value="hello" multiple onchange="readSourceImages(this)">
-                            </label>
-                        </li>   
-                        <li>
-                            <input type="submit" value="Run" class="detectButton">
-                        </li>   
-                    </ul>
-                </form>
-                
-            </div>
-
-            <div class="resultScreenDetection" class="verticalScrollWrapper">
-                <div class="verticalScrollInner">
-                    <div id="resultText">
-                        <%- content %>
-                    </div>
+                <div class="leftSideButton">
+                    <form method="POST" action="/api/rekognition/detection" enctype="multipart/form-data">
+                        <ul class="button-list">
+                            <li>
+                                <label class="uploadButton">
+                                    Upload Images
+                                    <input type="file" id="files" name="images" value="hello" multiple onchange="readSourceImages(this)">
+                                </label>
+                            </li>   
+                            <li>
+                                <input type="submit" value="Run" class="detectButton">
+                            </li>   
+                        </ul>
+                    </form>
+                    
                 </div>
             </div>
 
-            <div class="rightSideButton">
-    
-                <input value="Create a text file" type="button" id="export" class="downloadButton" />
-                <a id="download" target="_blank">Download</a>
+            <div class="rightScreen">
+                <div class="resultScreenDetection" class="verticalScrollWrapper">
+                    <div class="verticalScrollInner">
+                        <div id="resultText">
+                            <%- content %>
+                        </div>
+                    </div>
+                </div>
 
-                
+                <div class="rightSideButton">
+        
+                    <input value="Create a text file" type="button" id="export" class="downloadButton" />
+                    <a id="download" target="_blank">Download</a>
+
+                </div>
             </div>
         </div>
-
-
-    
 
         <footer>
 
         </footer>
-    </content>
     </body>
-    <script>
-        hs.pageLoader('content');
-    </script>
 </html>

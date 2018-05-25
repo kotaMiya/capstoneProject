@@ -3,16 +3,10 @@
     <head>
         <title>Capstone</title>
         <link rel='stylesheet' href='/css/style.css' />
-     
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
-        <script src="https://github.com/eligrey/FileSaver.js"></script>
         <script src='/js/amazon.js'></script>
-        
-       
     </head>
     <body>
-            <content>
         <header class="headerContainer">
             <div class="homeText">
                     <h1 onclick="changeText(this)"><%= title %></h1>
@@ -20,17 +14,17 @@
             <div class="toggleWrapper">
                 <ul>
                     <li class="detectionSide">
-                        <a href="/api/faceplusplus/detection" class="toggle_off_btn">Detection</a>
+                        <a href="/api/facePlusPlus/detection" class="toggle_off_btn">Detection</a>
                     </li>
                     <li>
-                        <a href="/api/faceplusplus/recognition" class="toggle_on_btn">Recognition</a>
+                        <a href="/api/facePlusPlus/recognition" class="toggle_on_btn">Recognition</a>
                     </li>
                 </ul>
             </div>
             <nav>
                 <ul style="list-style-type:none">
                     <li>
-                        <a href='/api/vision'>Google</a>
+                        <a href='/api/vision/detection'>Google</a>
                     </li>
                     <li>
                         <a href='/api/face'>Microsoft</a>
@@ -50,69 +44,63 @@
         </header>
        
         <div class="facePlusMainContainer">
-            <div id="firstScreen">
+            <div class="imageScreen">
                 <div id="pictureScreen" class="horizontalScrollWrapper">
-                        <div id="test" class="scrollInner">
-                            <%- sourceImageList %>
-                        </div>
-                    </div>
-        
-                    <div id="targetScreen" class="horizontalScrollWrapper">
-                        <div id="target" class="scrollInner">
-                            <%- targetImageList %>
-                        </div>
-                    </div>
-            </div>
-            
-            <div class="leftSideButton">
-                <form method="POST" action="/api/faceplusplus/recognition"  onsubmit = "hs.loading()" enctype="multipart/form-data">
-                    <ul class="button-list">
-                        <li>
-                            <label class="uploadButton">
-                                Upload Source Image
-                                <input type="file" id="files" name="images" value="hello" onchange="readSourceImages(this)">
-                            </label>
-                        </li>   
-                        <li>
-                            <label class="uploadButton">
-                                Upload Target Image
-                                <input type="file" id="foo" name="images" value="hello" multiple onchange="readTargetImages(this)">
-                            </label>
-                        </li>  
-                        <li>
-                            <input type="submit" value="Run" class="detectButton">
-                        </li>   
-                    </ul>
-                </form>
-                
-            </div>
-
-            <div class="resultScreen" class="verticalScrollWrapper">
-                <div class="verticalScrollInner">
-                    <div id="resultText">
-                        <%- content %>
+                    <div id="test" class="scrollInner">
+                        <%- sourceImageList %>
                     </div>
                 </div>
-            </div>
+        
+                <div id="targetScreen" class="horizontalScrollWrapper">
+                    <div id="target" class="scrollInner">
+                        <%- targetImageList %>
+                    </div>
+                </div>
 
-            <div class="rightSideButton">
-    
-                <input value="Create a text file" type="button" id="export" class="downloadButton" />
-                <a id="download" target="_blank">Download</a>
+                <div class="leftSideButton">
+                    <form method="POST" action="/api/facePlusPlus/recognition" enctype="multipart/form-data">
+                        <ul class="button-list">
+                            <li>
+                                <label class="uploadButton">
+                                    Upload Source Image
+                                    <input type="file" id="files" name="images" value="hello" multiple onchange="readSourceImages(this)">
+                                </label>
+                            </li>   
+                            <li>
+                                <label class="uploadButton">
+                                    Upload Target Image
+                                    <input type="file" id="foo" name="images" value="hello" multiple onchange="readTargetImages(this)">
+                                </label>
+                            </li>  
+                            <li>
+                                <input type="submit" value="Run" class="detectButton">
+                            </li>   
+                        </ul>
+                    </form>
+                    
+                </div>
+            </div>    
+            
+            <div class="rightScreenForRecognition">
+                <div class="resultScreen" class="verticalScrollWrapper">
+                    <div class="verticalScrollInner">
+                        <div id="resultText">
+                            <%- content %>
+                        </div>
+                    </div>
+                </div>
 
-                
+                <div class="rightSideButton">
+        
+                    <input value="Create a text file" type="button" id="export" class="downloadButton" />
+                    <a id="download" target="_blank">Download</a>
+
+                </div>
             </div>
         </div>
-
-
-    
 
         <footer>
 
         </footer>
-    </content>
     </body>
-    <script>
-        hs.pageLoader('content');
-    </script>
 </html>

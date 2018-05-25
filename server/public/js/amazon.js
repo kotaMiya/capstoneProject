@@ -14,10 +14,12 @@ function readSourceImages(input) {
         list.removeChild(list.firstChild);
     }
 
-    if (input.files.length > 10) {
-        alert("You can only upload a maximum of 10 images.");
+    if (input.files.length > 8) {
+        alert("You can only upload a maximum of 8 images.");
     } else {
+        console.log(input.files);
         if (input.files && input.files[0]) {
+            var counter = 0;
             for (var i = 0; i < input.files.length; i++) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
@@ -26,7 +28,15 @@ function readSourceImages(input) {
                     imgEle.height = 230;
                     imgEle.width = 200;
                     imgEle.className = 'box';
+                    if (counter === 4) {
+                        var br = document.createElement('br');
+                        console.log(br);
+                        console.log(imgEle);
+                        document.getElementById('test').appendChild(br);
+                    }
+                    
                     document.getElementById('test').appendChild(imgEle);
+                    counter++;
                 };
         
                 reader.readAsDataURL(input.files[i]);
