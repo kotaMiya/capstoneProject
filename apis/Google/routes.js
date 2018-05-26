@@ -22,8 +22,7 @@ router.get('/vision/detection', function(req, res) {
     {
         title : 'Google Vision',
         content: '',
-        sourceImageList: '',
-        targetImageList: ''
+        imageList: '',
     });
 })
 

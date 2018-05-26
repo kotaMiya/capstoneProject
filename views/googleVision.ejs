@@ -1,22 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Capstone</title>
+        <title>Capstone Project</title>
         <link rel='stylesheet' href='/css/style.css' />
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
-        <script src="https://github.com/eligrey/FileSaver.js"></script>
         <script src='/js/amazon.js'></script>
-        
-       
     </head>
     <body>
-            <content>
         <header class="headerContainer">
             <div class="homeText">
-                    <h1 onclick="changeText(this)"><%= title %></h1>
+                <h1><a href="/" class="homeTitle">HOME</a></h1> 
+                <h2 class="subTitle"> - <%= title %></h2>
             </div>
-            <div class="toggleWrapper">
+            <div class="toggleWrapper googleToggleWrapper">
                 <ul>
                 <li class="detectionSide">
                     <a href="/api/vision/detection" class="toggle_on_btn">Detection</a>
@@ -29,7 +25,7 @@
                         <a href='/api/vision/detection'>Google</a>
                     </li>
                     <li>
-                        <a href='/api/face'>Microsoft</a>
+                        <a href='/api/msFace/detection'>Microsoft</a>
                     </li>
                     <li>
                         <a href='/api/rekognition/detection'>Amazon</a>
@@ -46,59 +42,53 @@
         </header>
        
         <div class="googleMainContainer">
-            <div id="firstScreen">
+            <div class="leftScreen">
                 <div id="pictureScreenDetection" class="horizontalScrollWrapper">
-                   
+                    
                     <div id="test" class="scrollInner">
-                        <%- sourceImageList %>
+                        <%- imageList %>
                     </div>
             
                 </div>
-            </div>
             
-            <div class="leftSideButton">
-                <form method="POST" action="/api/vision/detection"  onsubmit = "hs.loading()" enctype="multipart/form-data">
-                    <ul class="button-list">
-                        <li>
-                            <label class="uploadButton">
-                                Upload Images
-                                <input type="file" id="files" name="images" value="hello" multiple onchange="readSourceImages(this)">
-                            </label>
-                        </li>   
-                        <li>
-                            <input type="submit" value="Run" class="detectButton">
-                        </li>   
-                    </ul>
-                </form>
-                
-            </div>
-
-            <div class="resultScreenDetection" class="verticalScrollWrapper">
-                <div class="verticalScrollInner">
-                    <div id="resultText">
-                        <%- content %>
-                    </div>
+                <div class="leftSideButton">
+                    <form method="POST" action="/api/vision/detection" enctype="multipart/form-data">
+                        <ul class="button-list">
+                            <li>
+                                <label class="uploadButton">
+                                    Upload Images
+                                    <input type="file" id="files" name="images" value="hello" multiple onchange="readSourceImages(this)">
+                                </label>
+                            </li>   
+                            <li>
+                                <input type="submit" value="Run" class="detectButton">
+                            </li>   
+                        </ul>
+                    </form>
+                    
                 </div>
             </div>
 
-            <div class="rightSideButton">
-    
-                <input value="Create a text file" type="button" id="export" class="downloadButton" />
-                <a id="download" target="_blank">Download</a>
+            <div class="rightScreen">
+                <div class="resultScreenDetection" class="verticalScrollWrapper">
+                    <div class="verticalScrollInner">
+                        <div id="resultText">
+                            <%- content %>
+                        </div>
+                    </div>
+                </div>
 
-                
+                <div class="rightSideButton">
+        
+                    <input value="Create a text file" type="button" id="export" class="downloadButton" />
+                    <a id="download" target="_blank">Download</a>
+
+                </div>
             </div>
         </div>
-
-
-    
 
         <footer>
 
         </footer>
-    </content>
     </body>
-    <script>
-        hs.pageLoader('content');
-    </script>
 </html>

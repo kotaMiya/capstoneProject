@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Capstone</title>
+        <title>Capstone Project</title>
         <link rel='stylesheet' href='/css/style.css' />
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src='/js/amazon.js'></script>
@@ -9,7 +9,8 @@
     <body>
         <header class="headerContainer">
             <div class="homeText">
-                    <h1 onclick="changeText(this)"><%= title %></h1>
+                <h1><a href="/" class="homeTitle">HOME</a></h1> 
+                <h2 class="subTitle"> - <%= title %></h2>
             </div>
             <div class="toggleWrapper">
                 <ul>
@@ -27,7 +28,7 @@
                         <a href='/api/vision/detection'>Google</a>
                     </li>
                     <li>
-                        <a href='/api/face'>Microsoft</a>
+                        <a href='/api/msFace/detection'>Microsoft</a>
                     </li>
                     <li>
                         <a href='/api/rekognition/detection'>Amazon</a>

@@ -8,6 +8,13 @@ a {
 }
 
 
+/**
+*
+*
+*   - common header - 
+*
+*/
+
 .headerContainer {
     display: flex;
     flex-direction: row;
@@ -15,10 +22,21 @@ a {
 }
 
 .homeText {
+    display: flex;
     flex: 1;
-    display: block;
     color: #202223;
     margin-left: 30px;
+}
+
+.homeTitle {
+    font-family: 'Open Sans', sans-serif;
+    color: #262626;
+}
+
+.subTitle {
+    font-size: 20px;
+    padding: 12px;
+    font-family: 'Open Sans', sans-serif;
 }
 
 
@@ -27,10 +45,10 @@ header ul li {
     display: inline-block;
     margin: 10px 20px;
     font-size: 20px;
+    font-family: 'Open Sans', sans-serif;
 }
 
 li a.active {
-    color: #202223;
     color: #202223;
     font-weight: 300;
 }
@@ -38,68 +56,42 @@ li a:hover {
     color: #333333;
 }
 
+/**
+*
+*
+*   - End of common header - 
+*
+*/
+
+
+
+/**
+*
+*   - common screen -
+*
+*/
+
 .leftScreen {
-    flex: column;
+    flex-direction: column;
     flex: 2;
     height: 100%;
 }
 
 .rightScreen {
-    flex: column;
+    flex-direction: column;
     flex: 1;
     height: 100%;
 }
-
-/*  detection */
-
-#pictureScreenDetection {
-    height: 88%;
-  
-    margin: 5px;
-    background-color: #ffffff;
-}
-
-.resultScreenDetection {
-
-    height: 88%;
-    
-    margin: 5px;
-    background-color: #ffffff;
-    font-size: 14px;
-}
-
-/* Recognition */
-
-.imageScreen {
-    display: flex;
-    flex-direction: column;
-    flex: 2;
-}
-
-.rightScreenForRecognition {
-    flex: 1;
-}
-
 
 #pictureScreen {
     flex: 2;
     height: 80%;
-
     margin: 5px;
     background-color: #ffffff;
 }
 
-
-#targetScreen {
-    flex: 2;
-    margin: 5px;
-    height: 50%;
-    background-color: #ffffff;
-}
-
-.rightScreen {
-    display: flex;
-    flex-direction: column;
+.leftSideButton {
+    height: 10x;
 }
 
 .resultScreen {
@@ -110,14 +102,11 @@ li a:hover {
     font-size: 14px;
 }
 
-.leftSideButton {
-    height: 10x;
-}
-
 label {
     padding: 10px;
     background-color: #262626; 
     display: table;
+    font-family: 'Open Sans', sans-serif;
 }
 
 input[type="file"] {
@@ -145,7 +134,7 @@ input[type="file"] {
 
 .rightSideButton input {
     color: white;
-   
+    font-family: 'Open Sans', sans-serif;
 }
 
 .rightSideButton a {
@@ -171,14 +160,79 @@ input[type="file"] {
 
 .downloadButton a {
     color: #F5F1E9;
+    font-family: 'Open Sans', sans-serif;
 }
-
-
 
 .button-list li {
     display: inline-block;
 
 }
+
+/**
+*
+*   - End of common screen -
+*
+*/
+
+
+/**
+*
+*   - detection -
+*
+*/
+
+#pictureScreenDetection {
+    height: 88%;
+  
+    margin: 5px;
+    background-color: #ffffff;
+}
+
+.resultScreenDetection {
+
+    height: 88%;
+    
+    margin: 5px;
+    background-color: #ffffff;
+    font-size: 14px;
+}
+
+/**
+*
+*   - End of detection -
+*
+*/
+
+/**
+*
+*   - Recognition -
+*
+*/
+
+.imageScreen {
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+}
+
+.rightScreenForRecognition {
+    flex: 1;
+}
+
+#targetScreen {
+    flex: 2;
+    margin: 5px;
+    height: 50%;
+    background-color: #ffffff;
+}
+
+
+/**
+*
+*   - End of Recognition -
+*
+*/
+
 
 
 /**
@@ -189,10 +243,14 @@ input[type="file"] {
 
 .toggleWrapper {
     background-color: #fff;
-   color: white;
+    color: white;
     height: 80px;
     border-radius: 70px;
-    padding-right: 10px;
+    padding-right: 20px;
+}
+
+.googleToggleWrapper {
+    flex: 0.5;
 }
 
 .toggle_on_btn{
@@ -203,6 +261,7 @@ input[type="file"] {
     text-decoration: none;
     color: #2C5379;   
  }
+
  
  .toggle_on_btn:before{
     position: absolute;
@@ -238,6 +297,73 @@ input[type="file"] {
  }
 
 
+/**
+*
+*   -- Home -- 
+*
+*/
+
+.homeContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.homeContainer h1 {
+    font-size: 50px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.homeContainer h3 {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 30px;
+}
+
+.homeLists {
+    list-style-type: none;
+    flex: 1;
+}
+
+.homeLists li {
+    display: inline-block;
+    padding: 0 10px;
+}
+
+.homeLists a {
+    font-size: 30px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.api_btn{
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
+    padding: 0.25em 0;
+    margin: 0 20px;
+    text-decoration: none;
+    color: #27313D;   
+ }
+ 
+.api_btn:before{
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 4px;
+    top:100%;
+    left: 0;
+    border-radius: 3px;
+    background:#67c5ff;
+    transition: .2s;
+ }
+ 
+.api_btn:hover:before {
+    top: -webkit-calc(100% - 3px);
+    top: calc(100% - 3px);
+}
+
 
 /**
 *
@@ -253,21 +379,17 @@ input[type="file"] {
     background-color: #DE4830;
 }
 
-
-/** 
-*
-*   -- Amazon Rekognition --
-*
-*/
-
-
-.amazonMainContainer {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    height: 95%;
-    background-color: #F29A33;
-}
+.google_btn:before{
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 4px;
+    top:100%;
+    left: 0;
+    border-radius: 3px;
+    background:#DE4830;
+    transition: .2s;
+ }
 
 
 /**
@@ -284,6 +406,47 @@ input[type="file"] {
     background-color: #16A6B6;
 }
 
+.microsoft_btn:before{
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 4px;
+    top:100%;
+    left: 0;
+    border-radius: 3px;
+    background:#16A6B6;
+    transition: .2s;
+}
+
+/** 
+*
+*   -- Amazon Rekognition --
+*
+*/
+
+
+.amazonMainContainer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    height: 95%;
+    background-color: #F29A33;
+}
+
+.amazon_btn:before{
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 4px;
+    top:100%;
+    left: 0;
+    border-radius: 3px;
+    background:#F29A33;
+    transition: .2s;
+}
+
+
+
 /**
 *
 *    -- Face++ --
@@ -296,6 +459,18 @@ input[type="file"] {
     flex-direction: row;
     height: 95%;
     background-color: #2C2C2C;
+}
+
+.facepp_btn:before{
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 4px;
+    top:100%;
+    left: 0;
+    border-radius: 3px;
+    background:#2C2C2C;
+    transition: .2s;
 }
 
 
@@ -313,6 +488,17 @@ input[type="file"] {
     background-color: #4A9D8B;
 }
 
+.facepp_btn:before{
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 4px;
+    top:100%;
+    left: 0;
+    border-radius: 3px;
+    background:#4A9D8B;
+    transition: .2s;
+}
 
 
 

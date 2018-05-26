@@ -1,73 +1,40 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>test</title>
+        <title>Capstone Project</title>
         <link rel='stylesheet' href='/css/style.css' />
         
         <script src="https://sdk.amazonaws.com/js/aws-sdk-2.208.0.min.js"></script>
         <script src="http://wzrd.in/standalone/uuid%2Fv4@latest"></script>
 
         <script src='/js/amazon.js'></script>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
        
     </head>
     <body>
-        <header class="headerContainer">
-            <div class="homeText">
-                    <h1 onclick="changeText(this)"><%= title %></h1>
-            </div>
-                <nav>
-                    <ul style="list-style-type:none">
-                        <li>
-                            <a href='/api/vision/detection'>Google</a>
-                        </li>
-                        <li>
-                            <a href='/api/face/detection'>Microsoft</a>
-                        </li>
-                        <li>
-                            <a href='/api/rekognition/detection'>Amazon</a>
-                        </li>
-                        <li>
-                            <a href='/api/faceplusplus/detection'>Face++</a>
-                        </li>
-                        <li>
-                            <a href='/api/kairos/detection'>Kairos</a>
-                        </li>
-                    </ul>   
-                        
-                </nav>
-        </header>
-        
-        <div class="mainContainer">
-            <div id="pictureScreen" class="scrollWrapper">
-                <div id="test" class="scrollInner">
-
-                </div>
-            </div>
-
-            <div class="leftSideButton">
-                <label class="uploadButton">
-                    Upload
-                    <input type="file" id="files" multiple onchange="readImages(this)">
-                </label>
-                
-                <form method="post" action="/api/rekognition">
-                    <input type="hidden">
-                    <input type="submit" value="Submit">
-                    <button class="detectButton" onclick="detectImages()">Detect</button>
-                </form>
-                
-            </div>
-
-            <div class="resultScreen">
-                    
-            </div>
-
-            <div class="rightSideButton">
-                
-                <button class="downloadButton"><a href="URL" download="test.txt">Download</a></button>
-            </div>
+   
+  
+        <div class="homeContainer">
+            <h1>Home</h1>
+            <h3>Face Detection & Recognition</h3>
+            <ul class="homeLists">
+                <li>
+                    <a href='/api/vision/detection' class="api_btn google_btn">Google</a>
+                </li>
+                <li>
+                    <a href='/api/msFace/detection' class="api_btn microsoft_btn">Microsoft</a>
+                </li>
+                <li>
+                    <a href='/api/rekognition/detection' class="api_btn amazon_btn">Amazon</a>
+                </li>
+                <li>
+                    <a href='/api/faceplusplus/detection' class="api_btn facepp_btn">Face++</a>
+                </li>
+                <li>
+                    <a href='/api/kairos/detection' class="api_btn kairos_btn">Kairos</a>
+                </li>
+            </ul> 
         </div>
-    
 
         <footer>
 

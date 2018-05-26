@@ -2,9 +2,7 @@ console.log('this is amazon');
 
 
 
-function changeText(id) { 
-    id.innerHTML = "Ooops!";
-}
+
 
 
 function readSourceImages(input) {
@@ -17,7 +15,7 @@ function readSourceImages(input) {
     if (input.files.length > 8) {
         alert("You can only upload a maximum of 8 images.");
     } else {
-        console.log(input.files);
+        
         if (input.files && input.files[0]) {
             var counter = 0;
             for (var i = 0; i < input.files.length; i++) {
