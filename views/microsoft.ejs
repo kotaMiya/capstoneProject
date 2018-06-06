@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CloudVision</title>
+	<link rel="stylesheet" type="text/css" href="/css/mycss.css">
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+	<header class="headerContainer">
+		<div class="homeText">
+			<h1><a href="/" class="homeTitle">HOME</a></h1> 
+			<h2 class="subTitle"> - <%= title %></h2>
+		</div>
+	
+		<nav>
+			<ul style="list-style-type:none">
+				<li>
+					<a href='/api/vision/detection'>Google</a>
+				</li>
+				<li>
+					<a href='/api/msFace/detection'>Microsoft</a>
+				</li>
+				<li>
+					<a href='/api/rekognition/detection'>Amazon</a>
+				</li>
+				<li>
+					<a href='/api/facePlusPlus/detection'>Face++</a>
+				</li>
+				<li>
+					<a href='/api/kairos/detection'>Kairos</a>
+				</li>
+			</ul>   
+				
+		</nav>
+	</header>
+
+
+<div id = "wrapper">
+
+	<div class="l-box">
+		<div class = "image">
+			<div id="myCanvas" >
+				
+			</div>
+		</div>
+
+		<div = class = "upload">
+		<label for="filename" class="custom-file-upload"> Upload</label>
+		<input type="file" id="filename" name="filename"  multiple>
+		</div>
+
+
+		<div class = "handin">
+			<button class="button handinButton" id="btn" >Detect</button>
+			<button class="button handinButton" id="verifyBtn" >Verify</button>
+			<button class="button handinButton" id="addFace" >Add Face</button>
+
+		
+		</div>
+	
+	</div>
+
+	<div class="r-box">
+		<div id="response" class = "log">
+		</div>
+		<div class = "download">
+			<button id="confirmBtn" class="button downloadButton" >Download</button>
+			  <a class="export" style="display:none" href="download"></a>
+		</div>
+	</div>
+
+</div>
+
+
+
+
+
+	<script src="/js/jquery-2.2.2.min.js"></script>
+	<script src="/js/faceDetection.js"></script>
+
+	<script type="text/javascript">
+		var obj = [];
+		document.querySelector(".export").addEventListener('click',
+		function(){
+			this.download = "log.json";
+			this.href = "data:application/json," + JSON.stringify(obj,null,2);
+		}
+		)
+		document.getElementById("confirmBtn").addEventListener('click',function(){
+		document.querySelector(".export").click();
+		})
+	</script>
+	
+</body>
+
+</html>

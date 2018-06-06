@@ -1,9 +1,21 @@
 import { Router } from 'express';
+import axios from 'axios';
+import qs from 'qs';
+import multer from 'multer';
 
-import * as path from 'path';
-var multer = require('multer');
 
-var vision = require('@google-cloud/vision');
+import { 
+    getImagePath,
+    uploadImageForDetection, 
+    uploadImageForRecognition,
+    start,
+    end,
+    timeElapsed,
+} from '../utils/controller';
+import { Number } from 'core-js';
+
+import { GOOGLE_APP_KEY } from '../utils/apiKey';
+
 
 const storage =  multer.diskStorage({
     destination: './public/images',
@@ -27,70 +39,75 @@ router.get('/vision/detection', function(req, res) {
 })
 
 
-// router.post('/vision/detection', uploader.array('images', 10), function(req, res) {
-//     const files = req.files;
-//     var facesList = "";
+router.post('/vision/detection', uploader.array('images', 10), function(req, res) {
+    const files = req.files;
 
-//     console.time('someFunction');
+    var imageTagList = '';
+    var imageName = [];
 
-//      for (var i = 0; i < files.length; i++) {
-//         const request = "./public/images/" + req.files[i].originalname;
-//         var name = req.files[i].originalname;
-//         console.log(name)
-//         client
-//         .faceDetection(request)
-//         .then(results => {
-//             const faces = results[0].faceAnnotations;
-//             var numFaces = faces.length;
-//             console.log('Found ' + numFaces + (numFaces === 1 ? ' face' : ' faces'));
-//             facesList += '<div style="margin-bottom:20px">Image Name: '+name+ 
-//                             '<p>confidence number: '+faces[0].detectionConfidence+ 
-//                             '</p><p>joyLikelihood: '+faces[0].joyLikelihood +
-//                             '</p><p>sorrowLikelihood: '+faces[0].sorrowLikelihood +
-//                             ' </p><p>angerLikelihood: '+faces[0].angerLikelihood +
-//                             ' </p><p>surpriseLikelihood: '+faces[0].surpriseLikelihood+ 
-//                             ' </p><p>underExposedLikelihood: '+faces[0].underExposedLikelihood + 
-//                             ' </p><p>blurredLikelihood: '+faces[0].blurredLikelihood+ 
-//                             ' </p><p>headwearLikelihood: '+faces[0].headwearLikelihood+ '</p><hr></div>'
-//         })
-//         .catch(err => {
-//             console.error('ERROR:', err);
-//         });
-//     }
-//     console.timeEnd('someFunction');
+    const RapidAPI = require('rapidapi-connect');
+    const rapid = new RapidAPI("default-application_59b2bf13e4b07e6c5c5a69dc", "e796b8fe-7d87-4a8d-abc6-860bd36c682a");
 
+
+    for (var i = 0; i < files.length; i++) {
+        imageName.push(files[i].originalname);
+    }
+
+    let promise = new Promise(async (resolve, reject) => {
+        var imagePath = getImagePath(files);
+
+        var imageUrl = [];
+
+        console.log('#1', imagePath);
+      
+            
+        let data = await uploadImageForDetection(imagePath);
+
+        console.log('#2', data);
+
+        imageUrl = data[0];    // this is an array
+        imageTagList = data[1]
+
+        resolve(imageUrl);  //  resolve them as one of array.
+    })
+    .then(async (imageUrl) => {
+
+        console.log(imageUrl);
+
+        let num = 0;
+
+        let result = '';
         
-//     setTimeout(() => {
-//         console.log(facesList)
-//         res.render('google.ejs', 
-//         {
-//             title : 'Google Vision',
-//             content: facesList,
-//             sourceImageList: "",
-//             targetImageList: ""
-//         });
-//     }, 5000);
+    
+        rapid.call('GoogleCloudVision', 'detectFaces', { 
+            'image': imageUrl[num],
+            'maxResults': '4',
+            'apiKey': GOOGLE_APP_KEY
+    
+        }).on('success', (payload)=>{
+            
+            console.log('#3', payload[0].responses[0].faceAnnotations);
+            result += imageName[0] + ', ' + 'joyLikelihood: ';
+            result += payload[0].responses[0].faceAnnotations[0].joyLikelihood + '\n';
+        
+            if (num == imageName.length - 1) {
+                res.render('googleVision.ejs', 
+                    {
+                        title : 'Google Vision',
+                        content: result,
+                        imageList: imageTagList,
+                    });
+            }
 
-// })
+            num += 1;
+        
+        }).on('error', (payload)=>{
+    
+        });
 
+    }) 
 
-// var client = new vision.ImageAnnotatorClient();
-// function detectFaces(FileName,facesList) {
-//     // Make a call to the Vision API to detect the faces
-//     const request = "./public/images/" + FileName;
-//     client
-//       .faceDetection(request)
-//       .then(results => {
-//         const faces = results[0].faceAnnotations;
-//         var numFaces = faces.length;
-//         console.log('Found ' + numFaces + (numFaces === 1 ? ' face' : ' faces'));
-//         facesList.push(faces[0].detectionConfidence)
-//       })
-//       .catch(err => {
-//         console.error('ERROR:', err);
-//       });
-//   }
-
+})
 
 
 export default router;

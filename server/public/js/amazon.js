@@ -1,9 +1,3 @@
-console.log('this is amazon');
-
-
-
-
-
 
 function readSourceImages(input) {
     console.log('fire');

@@ -1,3 +1,4 @@
+
 // Amazon api 
 export const AMAZON_API_KEY = process.env.AMAZON_KEY;
 export const AMAZON_SECRET_KEY = process.env.AMAZON_SECRET;
@@ -12,5 +13,10 @@ export const KAIROS_SECRET_KEY = process.env.KAIROS_SECRET;
 
 
 // Cloudinary api 
-export const CLOUDINARY_APP_KEY = process.env.CLOUDINARY_KEY;
-export const CLOUDINARY_SECRET_KEY = process.env.CLOUDINARY_SECRET;
+export const CLOUDINARY_APP_KEY = process.env.CLOUDINARY_APP_KEY;
+export const CLOUDINARY_SECRET_KEY = process.env.CLOUDINARY_SECRET_KEY;
+
+// Google api
+export const GOOGLE_APP_KEY = process.env.GOOGLE_KEY;
+export const GOOGLE_SECRET_KEY = process.env.GOOGLE_SECRET;
+

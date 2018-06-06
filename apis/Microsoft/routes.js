@@ -27,7 +27,7 @@ const uploader = multer({ storage })
 
 
 router.get('/msFace/detection', function(req, res) {
-    res.render('microsoftDetection.ejs', 
+    res.render('microsoft.ejs', 
     {
         title : 'Microsoft Face',
         content: '',
