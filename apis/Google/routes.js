@@ -88,7 +88,10 @@ router.post('/vision/detection', uploader.array('images', 10), function(req, res
         }).on('success', (payload)=>{
             
             console.log('#3', payload[0].responses[0].faceAnnotations);
-            result += imageName[0] + '<br>' + 'joyLikelihood: ';
+            result += imageName[0] + '<br>';
+            result += 'detectionConfidence: ';
+            result += payload[0].responses[0].faceAnnotations[0].detectionConfidence + '<br>';
+            result += 'joyLikelihood: ';
             result += payload[0].responses[0].faceAnnotations[0].joyLikelihood + '<br>';
             result += 'sorrowLikelihood: ';
             result += payload[0].responses[0].faceAnnotations[0].sorrowLikelihood + '<br>';
