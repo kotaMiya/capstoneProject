@@ -14,7 +14,7 @@ export const KAIROS_SECRET_KEY = process.env.KAIROS_SECRET;
 
 // Cloudinary api 
 export const CLOUDINARY_APP_KEY = process.env.CLOUDINARY_KEY;
-export const CLOUDINARY_SECRET_KEY = process.env.CLOUDINARY_KEY;
+export const CLOUDINARY_SECRET_KEY = process.env.CLOUDINARY_SECRET;
 
 
 // Google api
