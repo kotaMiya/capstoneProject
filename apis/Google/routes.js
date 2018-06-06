@@ -15,6 +15,7 @@ import {
 import { Number } from 'core-js';
 
 import { GOOGLE_APP_KEY } from '../utils/apiKey';
+import { GoogleAuth } from 'google-auth-library';
 
 
 const storage =  multer.diskStorage({
@@ -87,8 +88,14 @@ router.post('/vision/detection', uploader.array('images', 10), function(req, res
         }).on('success', (payload)=>{
             
             console.log('#3', payload[0].responses[0].faceAnnotations);
-            result += imageName[0] + ', ' + 'joyLikelihood: ';
-            result += payload[0].responses[0].faceAnnotations[0].joyLikelihood + '\n';
+            result += imageName[0] + '<br>' + 'joyLikelihood: ';
+            result += payload[0].responses[0].faceAnnotations[0].joyLikelihood + '<br>';
+            result += 'sorrowLikelihood: ';
+            result += payload[0].responses[0].faceAnnotations[0].sorrowLikelihood + '<br>';
+            result += 'angerLikelihood: ';
+            result += payload[0].responses[0].faceAnnotations[0].angerLikelihood + '<br>';
+            result += 'surpriseLikelihood: ';
+            result += payload[0].responses[0].faceAnnotations[0].surpriseLikelihood + '<br>';
         
             if (num == imageName.length - 1) {
                 res.render('googleVision.ejs', 
