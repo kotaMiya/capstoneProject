@@ -1,8 +1,5 @@
 import { Router } from 'express';
-import axios from 'axios';
-import qs from 'qs';
 import multer from 'multer';
-
 
 import { 
     getImagePath,
@@ -12,11 +9,8 @@ import {
     end,
     timeElapsed,
 } from '../utils/controller';
-import { Number } from 'core-js';
 
 import { GOOGLE_APP_KEY } from '../utils/apiKey';
-import { GoogleAuth } from 'google-auth-library';
-
 
 const storage =  multer.diskStorage({
     destination: './public/images',
